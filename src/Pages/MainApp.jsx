@@ -59,6 +59,7 @@ function MainApp({ activeUser, users }) {
 				<header class="panel"></header>
 				<MainMessages
 					selectedConversation={selectedConversation}
+                    activeUser={activeUser}
 				/>
 				<ul class="conversation__messages"></ul>
 				{/* <!-- Message Box --> */}

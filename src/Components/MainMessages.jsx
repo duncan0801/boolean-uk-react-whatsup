@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function MainMessages({ selectedConversation }) {
+function MainMessages({ selectedConversation, activeUser }) {
 	const [messages, setMessages] = useState([]);
 	console.log("selectedConversation:", selectedConversation);
 
@@ -13,79 +13,21 @@ function MainMessages({ selectedConversation }) {
 	}, [selectedConversation]);
 	console.log(messages);
 
-	if (messages === []) {
+	if (selectedConversation === null) {
 		return null;
-	} else {
-		return (
-			<ul class="conversation__messages">
-				<li class="outgoing">
-					<p>
-						Lorem ipsum dolor sit amet consectetur, adipisicing
-						elit. Natus excepturi non odit quisquam et assumenda
-						suscipit maxime officiis repellat possimus! Soluta illum
-						rerum eligendi labore ut nemo quod voluptates ad.
-					</p>
-				</li>
-
-				{/* <!-- Outgoing messages are messages sent by the current logged in user --> */}
-				<li class="outgoing">
-					<p>Lorem ipsum...</p>
-				</li>
-				{/* <!--  --> */}
-
-				{/* <!-- This one doesnt belong to the current logged in user --> */}
-				<li>
-					<p>
-						Lorem ipsum dolor sit amet consectetur, adipisicing
-						elit. Natus excepturi non odit quisquam et assumenda
-						suscipit maxime officiis repellat possimus!
-					</p>
-				</li>
-
-				{/* <!--  --> */}
-				<li class="outgoing">
-					<p>Some test message</p>
-				</li>
-				<li class="outgoing">
-					<p>more messagesss!!!</p>
-				</li>
-				<li class="outgoing">
-					<p>more messagesss!!!</p>
-				</li>
-				<li class="outgoing">
-					<p>
-						Lorem ipsum dolor sit amet consectetur, adipisicing
-						elit. Natus excepturi non odit quisquam et assumenda
-						suscipit maxime officiis repellat possimus! Soluta illum
-						rerum eligendi labore ut nemo quod voluptates ad.Lorem
-						ipsum dolor sit amet consectetur, adipisicing elit.
-						Natus excepturi non odit quisquam et assumenda suscipit
-						maxime officiis repellat possimus! Soluta illum rerum
-						eligendi labore ut nemo quod voluptates ad.Lorem ipsum
-						dolor sit amet consectetur, adipisicing elit. Natus
-						excepturi non odit quisquam et assumenda suscipit maxime
-						officiis repellat possimus! Soluta illum rerum eligendi
-						labore ut nemo quod voluptates ad.Lorem ipsum dolor sit
-						amet consectetur, adipisicing elit. Natus excepturi non
-						odit quisquam et assumenda suscipit maxime officiis
-						repellat possimus! Soluta illum rerum eligendi labore ut
-						nemo quod voluptates ad.Lorem ipsum dolor sit amet
-						consectetur, adipisicing elit. Natus excepturi non odit
-						quisquam et assumenda suscipit maxime officiis repellat
-						possimus! Soluta illum rerum eligendi labore ut nemo
-						quod voluptates ad.Lorem ipsum dolor sit amet
-						consectetur, adipisicing elit. Natus excepturi non odit
-						quisquam et assumenda suscipit maxime officiis repellat
-						possimus! Soluta illum rerum eligendi labore ut nemo
-						quod voluptates ad.Lorem ipsum dolor sit amet
-						consectetur, adipisicing elit. Natus excepturi non odit
-						quisquam et assumenda suscipit maxime officiis repellat
-						possimus! Soluta illum rerum eligendi labore ut nemo
-						quod voluptates ad.
-					</p>
-				</li>
-			</ul>
-		);
 	}
+	return (
+		<ul class="conversation__messages">
+			{messages.map((message) => {
+                console.log(message)
+                console.log(activeUser)
+				return (
+                <li className={message.userId !== activeUser ? "outgoing" : ""}>
+					<p>{message.messageText}</p>
+				</li>
+                )
+			})}
+		</ul>
+	);
 }
 export default MainMessages;
