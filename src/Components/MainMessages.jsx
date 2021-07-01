@@ -1,71 +1,91 @@
-function MainMessages() {
-	return (
-		<ul class="conversation__messages">
-			<li class="outgoing">
-				<p>
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-					Natus excepturi non odit quisquam et assumenda suscipit
-					maxime officiis repellat possimus! Soluta illum rerum
-					eligendi labore ut nemo quod voluptates ad.
-				</p>
-			</li>
+import { useEffect, useState } from "react";
 
-			{/* <!-- Outgoing messages are messages sent by the current logged in user --> */}
-			<li class="outgoing">
-				<p>Lorem ipsum...</p>
-			</li>
-			{/* <!--  --> */}
+function MainMessages({ selectedConversation }) {
+	const [messages, setMessages] = useState([]);
+	console.log("selectedConversation:", selectedConversation);
 
-			{/* <!-- This one doesnt belong to the current logged in user --> */}
-			<li>
-				<p>
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-					Natus excepturi non odit quisquam et assumenda suscipit
-					maxime officiis repellat possimus!
-				</p>
-			</li>
+	useEffect(() => {
+		fetch(
+			`http://localhost:4000/messages?conversationId=${selectedConversation}`
+		)
+			.then((resp) => resp.json())
+			.then(setMessages);
+	}, [selectedConversation]);
+	console.log(messages);
 
-			{/* <!--  --> */}
-			<li class="outgoing">
-				<p>Some test message</p>
-			</li>
-			<li class="outgoing">
-				<p>more messagesss!!!</p>
-			</li>
-			<li class="outgoing">
-				<p>more messagesss!!!</p>
-			</li>
-			<li class="outgoing">
-				<p>
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-					Natus excepturi non odit quisquam et assumenda suscipit
-					maxime officiis repellat possimus! Soluta illum rerum
-					eligendi labore ut nemo quod voluptates ad.Lorem ipsum dolor
-					sit amet consectetur, adipisicing elit. Natus excepturi non
-					odit quisquam et assumenda suscipit maxime officiis repellat
-					possimus! Soluta illum rerum eligendi labore ut nemo quod
-					voluptates ad.Lorem ipsum dolor sit amet consectetur,
-					adipisicing elit. Natus excepturi non odit quisquam et
-					assumenda suscipit maxime officiis repellat possimus! Soluta
-					illum rerum eligendi labore ut nemo quod voluptates ad.Lorem
-					ipsum dolor sit amet consectetur, adipisicing elit. Natus
-					excepturi non odit quisquam et assumenda suscipit maxime
-					officiis repellat possimus! Soluta illum rerum eligendi
-					labore ut nemo quod voluptates ad.Lorem ipsum dolor sit amet
-					consectetur, adipisicing elit. Natus excepturi non odit
-					quisquam et assumenda suscipit maxime officiis repellat
-					possimus! Soluta illum rerum eligendi labore ut nemo quod
-					voluptates ad.Lorem ipsum dolor sit amet consectetur,
-					adipisicing elit. Natus excepturi non odit quisquam et
-					assumenda suscipit maxime officiis repellat possimus! Soluta
-					illum rerum eligendi labore ut nemo quod voluptates ad.Lorem
-					ipsum dolor sit amet consectetur, adipisicing elit. Natus
-					excepturi non odit quisquam et assumenda suscipit maxime
-					officiis repellat possimus! Soluta illum rerum eligendi
-					labore ut nemo quod voluptates ad.
-				</p>
-			</li>
-		</ul>
-	);
+	if (messages === []) {
+		return null;
+	} else {
+		return (
+			<ul class="conversation__messages">
+				<li class="outgoing">
+					<p>
+						Lorem ipsum dolor sit amet consectetur, adipisicing
+						elit. Natus excepturi non odit quisquam et assumenda
+						suscipit maxime officiis repellat possimus! Soluta illum
+						rerum eligendi labore ut nemo quod voluptates ad.
+					</p>
+				</li>
+
+				{/* <!-- Outgoing messages are messages sent by the current logged in user --> */}
+				<li class="outgoing">
+					<p>Lorem ipsum...</p>
+				</li>
+				{/* <!--  --> */}
+
+				{/* <!-- This one doesnt belong to the current logged in user --> */}
+				<li>
+					<p>
+						Lorem ipsum dolor sit amet consectetur, adipisicing
+						elit. Natus excepturi non odit quisquam et assumenda
+						suscipit maxime officiis repellat possimus!
+					</p>
+				</li>
+
+				{/* <!--  --> */}
+				<li class="outgoing">
+					<p>Some test message</p>
+				</li>
+				<li class="outgoing">
+					<p>more messagesss!!!</p>
+				</li>
+				<li class="outgoing">
+					<p>more messagesss!!!</p>
+				</li>
+				<li class="outgoing">
+					<p>
+						Lorem ipsum dolor sit amet consectetur, adipisicing
+						elit. Natus excepturi non odit quisquam et assumenda
+						suscipit maxime officiis repellat possimus! Soluta illum
+						rerum eligendi labore ut nemo quod voluptates ad.Lorem
+						ipsum dolor sit amet consectetur, adipisicing elit.
+						Natus excepturi non odit quisquam et assumenda suscipit
+						maxime officiis repellat possimus! Soluta illum rerum
+						eligendi labore ut nemo quod voluptates ad.Lorem ipsum
+						dolor sit amet consectetur, adipisicing elit. Natus
+						excepturi non odit quisquam et assumenda suscipit maxime
+						officiis repellat possimus! Soluta illum rerum eligendi
+						labore ut nemo quod voluptates ad.Lorem ipsum dolor sit
+						amet consectetur, adipisicing elit. Natus excepturi non
+						odit quisquam et assumenda suscipit maxime officiis
+						repellat possimus! Soluta illum rerum eligendi labore ut
+						nemo quod voluptates ad.Lorem ipsum dolor sit amet
+						consectetur, adipisicing elit. Natus excepturi non odit
+						quisquam et assumenda suscipit maxime officiis repellat
+						possimus! Soluta illum rerum eligendi labore ut nemo
+						quod voluptates ad.Lorem ipsum dolor sit amet
+						consectetur, adipisicing elit. Natus excepturi non odit
+						quisquam et assumenda suscipit maxime officiis repellat
+						possimus! Soluta illum rerum eligendi labore ut nemo
+						quod voluptates ad.Lorem ipsum dolor sit amet
+						consectetur, adipisicing elit. Natus excepturi non odit
+						quisquam et assumenda suscipit maxime officiis repellat
+						possimus! Soluta illum rerum eligendi labore ut nemo
+						quod voluptates ad.
+					</p>
+				</li>
+			</ul>
+		);
+	}
 }
-export default MainMessages
+export default MainMessages;

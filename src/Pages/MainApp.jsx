@@ -2,24 +2,22 @@ import MainMessages from "../Components/MainMessages";
 import SideChatList from "../Components/SideChatList";
 import { useEffect, useState } from "react";
 
-function MainApp({activeUser, users}) {
-    const [userChats, setUserChats] = useState([])
-    const currentUser = users.find((user) => user.id === activeUser)
-    console.log(activeUser)
+function MainApp({ activeUser, users }) {
+	const [userChats, setUserChats] = useState([]);
+	const [selectedConversation, setSelectedConversation] = useState(null);
+	const currentUser = users.find((user) => user.id === activeUser);
 
+	useEffect(() => {
+		fetch(`http://localhost:4000/conversations?userId=${activeUser}`)
+			.then((resp) => resp.json())
+			.then((chats) => {
+				setUserChats(chats);
+			});
+	}, []);
 
-    useEffect(()=> {
-        fetch(`http://localhost:4000/conversations?userId=${activeUser}`)
-        .then(resp => resp.json())
-        .then(chats => {
-            console.log(chats)
-            setUserChats(chats)
-        })
-    }, [])
-
-    if(userChats === []) {
-        return <h1>Loading...</h1>
-    }
+	if (userChats === []) {
+		return <h1>Loading...</h1>;
+	}
 
 	return (
 		<div class="main-wrapper">
@@ -34,7 +32,9 @@ function MainApp({activeUser, users}) {
 						src={currentUser.avatar}
 						alt=""
 					/>
-					<h3>{currentUser.firstName + " " + currentUser.lastName}</h3>
+					<h3>
+						{currentUser.firstName + " " + currentUser.lastName}
+					</h3>
 				</header>
 				{/* <!-- Search form --> */}
 				<form class="aside__search-container">
@@ -45,14 +45,21 @@ function MainApp({activeUser, users}) {
 						value=""
 					/>
 				</form>
-				<SideChatList users={users} userChats={userChats}/>
+				<SideChatList
+					users={users}
+					userChats={userChats}
+					activeUser={activeUser}
+                    setSelectedConversation={setSelectedConversation}
+				/>
 			</aside>
 
 			{/* <!-- Main Chat Section --> */}
 			<main class="conversation">
 				{/* <!-- Chat header --> */}
 				<header class="panel"></header>
-				<MainMessages/>
+				<MainMessages
+					selectedConversation={selectedConversation}
+				/>
 				<ul class="conversation__messages"></ul>
 				{/* <!-- Message Box --> */}
 				<footer>
@@ -84,4 +91,4 @@ function MainApp({activeUser, users}) {
 	);
 }
 
-export default MainApp
+export default MainApp;

@@ -1,4 +1,4 @@
-function SideChatList({ users, userChats }) {
+function SideChatList({ users, userChats, activeUser, setSelectedConversation }) {
 	if (userChats === []) {
 		return <h1>Loading...</h1>;
 	}
@@ -13,19 +13,17 @@ function SideChatList({ users, userChats }) {
 				</button>
 			</li>
 			{userChats.map((chat) => {
-				const participant = users.find(
-					(user) => {
-                        // if(chat.userId !== user.id) {
-                        //     return 
-                        // }
-                        // if(chat.participantID === user.id) {
-
-                        // }
+				const participant = users.find((user) => {
+					if(activeUser === chat.userId) {
+                        return user.id === chat.participantId
                     }
-				);
+                    if(activeUser === chat.participantId) {
+                        return user.id === chat.userId
+                    }
+				});
 				return (
 					<li>
-						<button class="chat-button">
+						<button onClick={() => setSelectedConversation(chat.id)} class="chat-button">
 							<img
 								class="avatar"
 								height="50"
@@ -34,7 +32,11 @@ function SideChatList({ users, userChats }) {
 								src={participant.avatar}
 							/>
 							<div>
-								<h3>{participant.firstName + " " + participant.lastName}</h3>
+								<h3>
+									{participant.firstName +
+										" " +
+										participant.lastName}
+								</h3>
 								<p>Last message</p>
 							</div>
 						</button>
