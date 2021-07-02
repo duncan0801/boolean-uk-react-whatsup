@@ -1,11 +1,36 @@
 import MainMessages from "../Components/MainMessages";
 import SideChatList from "../Components/SideChatList";
 import { useEffect, useState } from "react";
+import { Route } from "react-router-dom";
 
 function MainApp({ activeUser, users }) {
 	const [userChats, setUserChats] = useState([]);
 	const [selectedConversation, setSelectedConversation] = useState(null);
 	const currentUser = users.find((user) => user.id === activeUser);
+	const [searchString, setSearchString] = useState("");
+    const [messageString, setMessageString] = useState("")
+
+	console.log(selectedConversation);
+
+	function filterMessages(messages) {
+		return messages.filter((message) =>
+			message.messageText.includes(searchString)
+		);
+	}
+
+	function sendMessage(message, userId, conversationId) {
+		fetch(`http://localhost:4000/messages`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userId: userId,
+				messageText: message,
+				conversationId: conversationId
+			}),
+		});
+	}
 
 	useEffect(() => {
 		fetch(`http://localhost:4000/conversations?userId=${activeUser}`)
@@ -20,13 +45,13 @@ function MainApp({ activeUser, users }) {
 	}
 
 	return (
-		<div class="main-wrapper">
+		<div className="main-wrapper">
 			{/* <!-- Side Panel --> */}
 			<aside>
 				{/* <!-- Side Header --> */}
-				<header class="panel">
+				<header className="panel">
 					<img
-						class="avatar"
+						className="avatar"
 						width="50"
 						height="50"
 						src={currentUser.avatar}
@@ -37,41 +62,54 @@ function MainApp({ activeUser, users }) {
 					</h3>
 				</header>
 				{/* <!-- Search form --> */}
-				<form class="aside__search-container">
+				<form className="aside__search-container">
 					<input
+						onChange={(e) => setSearchString(e.target.value)}
 						type="search"
 						name="messagesSearch"
 						placeholder="Search chats"
-						value=""
+						value={searchString}
 					/>
 				</form>
 				<SideChatList
 					users={users}
 					userChats={userChats}
 					activeUser={activeUser}
-                    setSelectedConversation={setSelectedConversation}
+					setSelectedConversation={setSelectedConversation}
 				/>
 			</aside>
 
 			{/* <!-- Main Chat Section --> */}
-			<main class="conversation">
+			<main className="conversation">
 				{/* <!-- Chat header --> */}
-				<header class="panel"></header>
-				<MainMessages
-					selectedConversation={selectedConversation}
-                    activeUser={activeUser}
-				/>
-				<ul class="conversation__messages"></ul>
+				<header className="panel"></header>
+				<Route path="/logged-in/:chatId">
+					<MainMessages
+						selectedConversation={selectedConversation}
+						activeUser={activeUser}
+						filterMessages={filterMessages}
+						searchString={searchString}
+					/>
+				</Route>
+
+				<ul className="conversation__messages"></ul>
 				{/* <!-- Message Box --> */}
 				<footer>
-					<form class="panel conversation__message-box">
+					<form className="panel conversation__message-box" onSubmit={(event) => {
+								event.preventDefault();
+								sendMessage(messageString, activeUser, selectedConversation)
+                                console.log(selectedConversation)
+							}}> 
 						<input
 							type="text"
 							placeholder="Type a message"
 							rows="1"
-							value=""
+							value={messageString}
+                            onChange={(event) => setMessageString(event.target.value)}
 						/>
-						<button type="submit">
+						<button
+							type="submit"
+						>
 							{/* <!-- This is the send button --> */}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

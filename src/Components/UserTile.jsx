@@ -6,9 +6,9 @@ function UserTile({user, setActiveUser}) {
 		<li>
 			<Link to="/logged-in" onClick={() => {
                 setActiveUser(user.id)
-            }} class="user-selection">
+            }} className="user-selection">
 				<img
-					class="avatar"
+					className="avatar"
 					width="50"
 					height="50"
 					src={user.avatar}

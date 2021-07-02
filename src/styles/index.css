@@ -30,6 +30,16 @@
 button {
   cursor: pointer;
 }
+a {
+    text-decoration: none;
+    color: none;
+}
+.ellipses-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+}
 
 input,
 textarea {
@@ -169,6 +179,7 @@ textarea:focus {
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: inherit;
+  
 }
 
 .conversation__messages {

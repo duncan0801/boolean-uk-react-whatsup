@@ -1,30 +1,37 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Message from "./Message";
 
-function MainMessages({ selectedConversation, activeUser }) {
+function MainMessages({ activeUser, filterMessages, searchString }) {
 	const [messages, setMessages] = useState([]);
-	console.log("selectedConversation:", selectedConversation);
+    
+    const {chatId} = useParams()
 
 	useEffect(() => {
 		fetch(
-			`http://localhost:4000/messages?conversationId=${selectedConversation}`
+			`http://localhost:4000/messages?conversationId=${chatId}`
 		)
 			.then((resp) => resp.json())
 			.then(setMessages);
-	}, [selectedConversation]);
-	console.log(messages);
+	}, [chatId]);
 
-	if (selectedConversation === null) {
+	if (chatId === null) {
 		return null;
 	}
+    // if(searchString !== "") {
+    //    let filteredMessages = filterMessages(messages)
+    //    console.log(messages)
+    // }
+    // console.log(messages)
 	return (
 		<ul class="conversation__messages">
 			{messages.map((message) => {
-                console.log(message)
-                console.log(activeUser)
 				return (
-                <li className={message.userId !== activeUser ? "outgoing" : ""}>
-					<p>{message.messageText}</p>
-				</li>
+               <Message
+               key={message.id}
+               userId={message.userId}
+               activeUser={activeUser}
+               messageText={message.messageText} />
                 )
 			})}
 		</ul>

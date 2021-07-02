@@ -1,28 +1,26 @@
-
 import useStore from "../store";
 import UserTile from "../Components/UserTile";
 
-function LoginPage({setActiveUser, users}) {
-	
-
-    if (users === []) {
-        return <h1>Loading...</h1>
-    }
+function LoginPage({ setActiveUser, users }) {
+	if (users === []) {
+		return <h1>Loading...</h1>;
+	}
 	return (
-		<div class="main-wrapper login">
-			<section class="login-section">
+		<div className="main-wrapper login">
+			<section className="login-section">
 				<h2>Choose your user!</h2>
 				<ul>
-					{users.map((user,index) => {
+					{users.map((user, index) => {
 						return (
-							<li>
-								<UserTile key={index} user={user}
-                                setActiveUser={setActiveUser} />
-							</li>
+							<UserTile
+								key={index}
+								user={user}
+								setActiveUser={setActiveUser}
+							/>
 						);
 					})}
 					<li>
-						<button class="user-selection">
+						<button className="user-selection">
 							<h3>+ Add a new user</h3>
 						</button>
 					</li>

@@ -9,20 +9,20 @@ Instructions
 - Make sure you start your json-server using node db/server.js
 -  You'll have to restart the server manually if you make changes to db.json
 - Make sure you read the API endpoints section
-- Render the login page, with the route /login
-- Render the main app page with the route /logged-in
-- Render the messages panel within the main app with the route /logged-in/:chatId
-- When you land on the app, you should be taken to the login page
-- If you navigate to /logged-in without choosing a user, you should be redirected to /login
+- ✔ Render the login page, with the route /login
+- ✔ Render the main app page with the route /logged-in
+- ✔ Render the messages panel within the main app with the route /logged-in/:chatId
+- ✔ When you land on the app, you should be taken to the login page
+- ✔ If you navigate to /logged-in without choosing a user, you should be redirected to /login
 
 Side panel
-- On the main app, render the side panel with a list of all the chats the user is on
-- Each item of the chats list should display the name of the other user in the chat, and a preview of the last message of the chat
+- ✔ On the main app, render the side panel with a list of all the chats the user is on
+- ✔ Each item of the chats list should display the name of the other user in the chat, and a preview of the last message of the chat
 - Render a search bar on the top of the side panel that search through the chats
 
 Chat messages main panel
-- When a user clicks on a chat from the side list, display all the chat messages in the messages section
-- The logged-in user messages should appear on the right-hand side, while the other user's messages should appear on the left-hand side
+-✔  When a user clicks on a chat from the side list, display all the chat messages in the messages section
+-✔  The logged-in user messages should appear on the right-hand side, while the other user's messages should appear on the left-hand side
 - Render a message box 
 - When a user submits a message, it should appear on the messages panel above
 - If you change users, the new messages should appear as well in their chat
